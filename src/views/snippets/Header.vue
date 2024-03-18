@@ -22,11 +22,12 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <template v-if="is_auth==1">
+          <template v-if="user">
           <v-list-item prepend-icon="mdi-home-city" title="Home" value="home" :to="{name: 'home'}"></v-list-item>
+          <v-list-item prepend-icon="mdi-home-city" title="Create Post" value="create-post" :to="{name: 'create-post'}"></v-list-item>
           <v-list-item prepend-icon="mdi-account-group-outline" title="Logout" value="logout" @click="auth.logout()"></v-list-item>
           </template>
-          <template v-else-if="!is_auth==0">
+          <template v-else-if="!user">
           <v-list-item prepend-icon="mdi-account" title="Login" value="account" :to="{name: 'login'}"></v-list-item>
           <v-list-item prepend-icon="mdi-account-group-outline" title="Register" value="users" :to="{name: 'register'}"></v-list-item>
           </template>
@@ -37,7 +38,8 @@
 import { ref } from 'vue'
 import authStore from '../../stores/auth';
 const auth = authStore()
-const is_auth = localStorage.getItem('is_auth')
+const user = JSON.parse(localStorage.getItem('user'))
+console.log(user)
 const drawer = ref(true)
 const rail = ref(false)
 </script>

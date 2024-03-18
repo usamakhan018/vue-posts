@@ -3,7 +3,8 @@ import authStore from '../stores/auth'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-
+import Create from '../views/posts/Create.vue'
+import Edit from '../views/posts/Edit.vue'
 const routes = [
     {
         path: '/',
@@ -23,6 +24,18 @@ const routes = [
         component: Register,
         meta: {auth: false}
     },
+    {
+        path: '/posts/create',
+        name: 'create-post',
+        component: Create,
+        meta: {auth: true},
+    },
+    {
+        path: '/posts/:id/edit',
+        name: 'edit-post',
+        component: Edit,
+        meta: {auth:true}
+    },
 ]
 
 const router = createRouter({
@@ -30,17 +43,4 @@ const router = createRouter({
     routes
 })
 
-
-router.beforeEach((to,from, next)=> {
-    const is_auth = localStorage.getItem('is_auth')
-    console.log(to.meta.auth)
-    console.log(is_auth)
-    if(is_auth && !to.meta.auth) {
-        next({name: 'home'})
-    } else if(!is_auth && to.meta.auth) {
-        next({name: 'login'})
-    } else {
-        next()
-    }
-})
 export default router
